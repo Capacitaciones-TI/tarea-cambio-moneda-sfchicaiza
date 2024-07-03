@@ -1,0 +1,150 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Prueba 1
+      id: prueba-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 1
+        setup-command: "./instalar.sh"
+        command: "./correr.sh USD EUR 100"
+        input: ''
+        expected-output: '93'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 2
+      id: prueba-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 2
+        setup-command: "./instalar.sh"
+        command: "./correr.sh USD GBP 100"
+        input: ''
+        expected-output: '79'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 3
+      id: prueba-3
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 3
+        setup-command: "./instalar.sh"
+        command: "./correr.sh USD AUD 100"
+        input: ''
+        expected-output: '150'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 4
+      id: prueba-4
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 4
+        setup-command: "./instalar.sh"
+        command: "./correr.sh EUR USD 100"
+        input: ''
+        expected-output: '107'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 5
+      id: prueba-5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 5
+        setup-command: "./instalar.sh"
+        command: "./correr.sh EUR GBP 100"
+        input: ''
+        expected-output: '85'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 6
+      id: prueba-6
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 6
+        setup-command: "./instalar.sh"
+        command: "./correr.sh EUR AUD 100"
+        input: ''
+        expected-output: '161'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: 'Prueba 7 '
+      id: prueba-7
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: 'Prueba 7 '
+        setup-command: "./instalar.sh"
+        command: "./correr.sh GBP USD 100"
+        input: ''
+        expected-output: '127'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 8
+      id: prueba-8
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 8
+        setup-command: "./instalar.sh"
+        command: "./correr.sh GBP EUR 100"
+        input: ''
+        expected-output: '118'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 9
+      id: prueba-9
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 9
+        setup-command: "./instalar.sh"
+        command: "./correr.sh GBP AUD 100"
+        input: ''
+        expected-output: '190'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Prueba 10
+      id: prueba-10
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Prueba 10
+        setup-command: "./instalar.sh"
+        command: "./correr.sh AUD USD 100"
+        input: ''
+        expected-output: '67'
+        comparison-method: contains
+        timeout: 10
+        max-score: 10
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PRUEBA-1_RESULTS: "${{steps.prueba-1.outputs.result}}"
+        PRUEBA-2_RESULTS: "${{steps.prueba-2.outputs.result}}"
+        PRUEBA-3_RESULTS: "${{steps.prueba-3.outputs.result}}"
+        PRUEBA-4_RESULTS: "${{steps.prueba-4.outputs.result}}"
+        PRUEBA-5_RESULTS: "${{steps.prueba-5.outputs.result}}"
+        PRUEBA-6_RESULTS: "${{steps.prueba-6.outputs.result}}"
+        PRUEBA-7_RESULTS: "${{steps.prueba-7.outputs.result}}"
+        PRUEBA-8_RESULTS: "${{steps.prueba-8.outputs.result}}"
+        PRUEBA-9_RESULTS: "${{steps.prueba-9.outputs.result}}"
+        PRUEBA-10_RESULTS: "${{steps.prueba-10.outputs.result}}"
+      with:
+        runners: prueba-1,prueba-2,prueba-3,prueba-4,prueba-5,prueba-6,prueba-7,prueba-8,prueba-9,prueba-10
